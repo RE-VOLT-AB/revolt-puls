@@ -1045,6 +1045,7 @@ function showResultScreen(entry){
   document.getElementById('res-testa').textContent = entry.testa;
   prevScreen = 'screen-result';
   showScreen('screen-result');
+  setTimeout(()=>renderInlineHistory('tri-result-hist','result-hist-list','result-stats','result-insight','result-insight-text'), 80);
 }
 
 function showDoneScreen(entry){
@@ -1053,6 +1054,7 @@ function showDoneScreen(entry){
   document.getElementById('done-testa').textContent = entry.testa;
   prevScreen = 'screen-done';
   showScreen('screen-done');
+  setTimeout(()=>renderInlineHistory('tri-done-hist','done-hist-list','done-stats','done-insight','done-insight-text'), 80);
 }
 
 function showHistory(){
