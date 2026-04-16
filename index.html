@@ -222,11 +222,11 @@ function renderInlineHistory(canvasId, listId, statsId, insightId, insightTextId
     const domZone = Object.entries(freq).sort((a,b)=>b[1]-a[1])[0][0];
     const domPct = Math.round((freq[domZone]/history.length)*100);
     const streak = calcStreakInline();
-    // Top 2 zones
+    // Top 3 zones
     const sorted = Object.entries(freq).sort((a,b)=>b[1]-a[1]);
-    const top2 = sorted.slice(0,2);
+    const top3 = sorted.slice(0,3);
     let top2html = '';
-    for(const [z,c] of top2){
+    for(const [z,c] of top3){
       const pct = Math.round((c/history.length)*100);
       const col = ZONE_COLORS_MAP[z]||'#ffcc00';
       top2html +=
@@ -265,17 +265,20 @@ function renderInlineHistory(canvasId, listId, statsId, insightId, insightTextId
       const recentFreq={};
       for(const h of recent7) recentFreq[h.zone]=(recentFreq[h.zone]||0)+1;
       const recentDom = Object.entries(recentFreq).sort((a,b)=>b[1]-a[1])[0][0];
+      const sorted2 = Object.entries(freq).sort((a,b)=>b[1]-a[1]);
+      const topCount = sorted2[0][1];
+      const tied = sorted2.filter(([z,c])=>c===topCount).length > 1;
       const insights = {
         'Flödet':'Du befinner dig ofta i <strong>Flödet</strong> – '+domPct+'% av dina kalibreringar landar där. Det är ett läge där beslut flödar naturligt. Notera vad som skapar det.',
         'Jag':'<strong>Jag</strong> är ditt mest frekventa läge – '+domPct+'% av gångerna. Du agerar från din egen riktning. Notera när det börjar kosta mer än det borde.',
         'Samarbeten':'Du hamnar ofta i <strong>Samarbeten</strong> – '+domPct+'% av dina kalibreringar. Frågan att bära: är du i samarbetena av val, eller för att det är tryggare?',
-        'Sökandet':'<strong>Sökandet</strong> är ditt vanligaste läge – '+domPct+'% av gångerna. Du rör dig mot något utan att ha hittat det ännu.',
+        'Sökandet':'<strong>Sökandet</strong> är ditt vanligaste läge – '+domPct+'% av gångerna. Du rör dig mot något utan att ha hittat vad det är ännu.',
         'Andra':'<strong>Andra</strong> styr dig oftast – '+domPct+'% av dina kalibreringar. Vems agenda lever du egentligen?',
-        'Oklart':'Du befinner dig ofta i <strong>Oklart</strong> – '+domPct+'% av gångerna. Det handlar sällan om brist på information.',
+        'Oklart':'Du befinner dig oftast i <strong>Oklart</strong> – '+domPct+'% av gångerna. Det handlar sällan om brist på information utan om att du inte kan eller vill se klart.',
         'Omständigheter':'<strong>Omständigheter</strong> styr dig mest – '+domPct+'% av dina kalibreringar. Varje dag du aktivt väljer din riktning är ett steg mot något annat.'
       };
-      let text = insights[domZone]||'';
-      if(recentDom !== domZone) text += ' <br><br>Senaste veckan rör du dig mer mot <strong>'+recentDom+'</strong>.';
+      let text = tied ? 'Du rör dig mellan flera lägen. Inget mönster dominerar ännu.' : (insights[domZone]||'');
+      if(!tied && recentDom !== domZone) text += ' <br><br>Senaste veckan rör du dig mer mot <strong>'+recentDom+'</strong>.';
       insightText.innerHTML = text;
     }
   }
@@ -1200,11 +1203,11 @@ function renderInlineHistory(canvasId, listId, statsId, insightId, insightTextId
     const domZone = Object.entries(freq).sort((a,b)=>b[1]-a[1])[0][0];
     const domPct = Math.round((freq[domZone]/history.length)*100);
     const streak = calcStreakInline();
-    // Top 2 zones
+    // Top 3 zones
     const sorted = Object.entries(freq).sort((a,b)=>b[1]-a[1]);
-    const top2 = sorted.slice(0,2);
+    const top3 = sorted.slice(0,3);
     let top2html = '';
-    for(const [z,c] of top2){
+    for(const [z,c] of top3){
       const pct = Math.round((c/history.length)*100);
       const col = ZONE_COLORS_MAP[z]||'#ffcc00';
       top2html +=
@@ -1243,17 +1246,20 @@ function renderInlineHistory(canvasId, listId, statsId, insightId, insightTextId
       const recentFreq={};
       for(const h of recent7) recentFreq[h.zone]=(recentFreq[h.zone]||0)+1;
       const recentDom = Object.entries(recentFreq).sort((a,b)=>b[1]-a[1])[0][0];
+      const sorted2 = Object.entries(freq).sort((a,b)=>b[1]-a[1]);
+      const topCount = sorted2[0][1];
+      const tied = sorted2.filter(([z,c])=>c===topCount).length > 1;
       const insights = {
         'Flödet':'Du befinner dig ofta i <strong>Flödet</strong> – '+domPct+'% av dina kalibreringar landar där. Det är ett läge där beslut flödar naturligt. Notera vad som skapar det.',
         'Jag':'<strong>Jag</strong> är ditt mest frekventa läge – '+domPct+'% av gångerna. Du agerar från din egen riktning. Notera när det börjar kosta mer än det borde.',
         'Samarbeten':'Du hamnar ofta i <strong>Samarbeten</strong> – '+domPct+'% av dina kalibreringar. Frågan att bära: är du i samarbetena av val, eller för att det är tryggare?',
-        'Sökandet':'<strong>Sökandet</strong> är ditt vanligaste läge – '+domPct+'% av gångerna. Du rör dig mot något utan att ha hittat det ännu.',
+        'Sökandet':'<strong>Sökandet</strong> är ditt vanligaste läge – '+domPct+'% av gångerna. Du rör dig mot något utan att ha hittat vad det är ännu.',
         'Andra':'<strong>Andra</strong> styr dig oftast – '+domPct+'% av dina kalibreringar. Vems agenda lever du egentligen?',
-        'Oklart':'Du befinner dig ofta i <strong>Oklart</strong> – '+domPct+'% av gångerna. Det handlar sällan om brist på information.',
+        'Oklart':'Du befinner dig oftast i <strong>Oklart</strong> – '+domPct+'% av gångerna. Det handlar sällan om brist på information utan om att du inte kan eller vill se klart.',
         'Omständigheter':'<strong>Omständigheter</strong> styr dig mest – '+domPct+'% av dina kalibreringar. Varje dag du aktivt väljer din riktning är ett steg mot något annat.'
       };
-      let text = insights[domZone]||'';
-      if(recentDom !== domZone) text += ' <br><br>Senaste veckan rör du dig mer mot <strong>'+recentDom+'</strong>.';
+      let text = tied ? 'Du rör dig mellan flera lägen. Inget mönster dominerar ännu.' : (insights[domZone]||'');
+      if(!tied && recentDom !== domZone) text += ' <br><br>Senaste veckan rör du dig mer mot <strong>'+recentDom+'</strong>.';
       insightText.innerHTML = text;
     }
   }
