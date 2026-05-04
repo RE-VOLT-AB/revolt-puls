@@ -1069,15 +1069,13 @@ function confirmChangeId(){
 
 function normalizeDate(raw) {
   if(!raw) return '';
-  // Already YYYY-MM-DD
   if(/^\d{4}-\d{2}-\d{2}$/.test(String(raw))) return raw;
-  // Try parsing any other format (e.g. "Fri May 01 2026 00:00:00 GMT+0200")
   const d = new Date(raw);
   if(isNaN(d.getTime())) return String(raw).slice(0,10);
   return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 }
 
-
+function fetchHistoryFromSheets(callback){
   if(!userId||!userPin){ if(callback) callback(); return; }
   fetch(SHEETS_URL + '?action=getHistory&userId=' + encodeURIComponent(userId) + '&password=' + encodeURIComponent(userPin))
     .then(r=>r.json())
