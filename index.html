@@ -1173,10 +1173,18 @@ function showDoneScreen(entry){
 
 function showHistory(){
   showScreen('screen-appHistory');
-  setTimeout(()=>{
-    drawTriangle('tri-appHistory', null, true);
-    renderHistoryList();
-  },50);
+  const render = () => {
+    setTimeout(()=>{
+      drawStatTriangleInline('tri-appHistory');
+      renderInlineHistory('tri-appHistory', 'appHistory-list', 'appHistory-stats', 'appHistory-insight', 'appHistory-insight-text');
+      renderHistoryList();
+    },50);
+  };
+  if(userId && userPin){
+    fetchHistoryFromSheets(render);
+  } else {
+    render();
+  }
 }
 
 function renderHistoryList(){
