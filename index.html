@@ -1077,6 +1077,10 @@ function normalizeDate(raw) {
 
 function fetchHistoryFromSheets(callback){
   if(!userId||!userPin){ if(callback) callback(); return; }
+  let done = false;
+  const finish = () => { if(!done){ done=true; if(callback) callback(); } };
+  // Safety timeout — always start app within 5s regardless
+  const timer = setTimeout(finish, 5000);
   fetch(SHEETS_URL + '?action=getHistory&userId=' + encodeURIComponent(userId) + '&password=' + encodeURIComponent(userPin))
     .then(r=>r.json())
     .then(res=>{
@@ -1099,7 +1103,7 @@ function fetchHistoryFromSheets(callback){
       }
     })
     .catch(()=>{})
-    .finally(()=>{ if(callback) callback(); });
+    .finally(()=>{ clearTimeout(timer); finish(); });
 }
 
 
