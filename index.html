@@ -547,7 +547,17 @@ const REFLECTIONS = {
 // ---- STATE ----
 let userId = localStorage.getItem('revolt_uid') || null;
 let userName = userId ? (localStorage.getItem('revolt_username_'+userId) || '') : '';
-let appHistory = JSON.parse(localStorage.getItem('revolt_appHistory') || '[]');
+let appHistory = (function(){
+  // Migrate from old key name if needed
+  const oldData = localStorage.getItem('revolt_history');
+  const newData = localStorage.getItem('revolt_appHistory');
+  if(oldData && !newData){
+    localStorage.setItem('revolt_appHistory', oldData);
+    localStorage.removeItem('revolt_history');
+    return JSON.parse(oldData);
+  }
+  return JSON.parse(newData || '[]');
+})();
 let shuffleBags = JSON.parse(localStorage.getItem('revolt_bags') || '{}');
 let currentZone = null;
 let dragActive = false;
