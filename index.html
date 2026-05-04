@@ -64,7 +64,7 @@ canvas#tri:active{cursor:grabbing}
   </div>
   <p id="setup-error" style="font-size:12px;color:#ff6b6b;text-align:center;margin:.25rem 0;min-height:16px"></p>
   <button class="btn" onclick="verifyTempPassword()">Fortsätt</button>
-  <p class="setup-note">Har du glömt ditt lösenord eller användar-ID? Kontakta oss på <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f59c9b939ab58790d8839a9981db8690">[email&#160;protected]</a></p>
+  <p class="setup-note">Har du glömt ditt lösenord eller användar-ID? Kontakta oss på oscar&#64;re&#45;volt&#46;se</p>
 </div>
 
 <!-- STEP 2: Create own password (first time only) -->
@@ -100,7 +100,7 @@ canvas#tri:active{cursor:grabbing}
   </div>
   <p id="change-error" style="font-size:12px;color:#ff6b6b;text-align:center;margin:.25rem 0;min-height:16px"></p>
   <button class="btn" onclick="confirmChangeId()">Logga in</button>
-  <p class="setup-note">Har du glömt ditt lösenord eller användar-ID? Kontakta oss på <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="751c1b131a35071058031a19015b0610">[email&#160;protected]</a></p>
+  <p class="setup-note">Har du glömt ditt lösenord eller användar-ID? Kontakta oss på oscar&#64;re&#45;volt&#46;se</p>
 </div>
 
 <!-- CALIBRATE SCREEN -->
@@ -189,7 +189,7 @@ canvas#tri:active{cursor:grabbing}
   <button class="btn secondary" style="margin-top:1rem" onclick="goBack()">Tillbaka</button>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js">
+<script>
 // ── INLINE HISTORY & STATS ──
 const ZONE_COLORS_MAP = {
   'Andra':'#8FAABF','Oklart':'#A08FBF','Jag':'#7AAF8A',
@@ -375,16 +375,6 @@ function drawStatTriangleInline(canvasId){
   ctx.fillStyle='rgba(255,204,0,0.5)';ctx.fillText('Flödet',CTR2.x,CTR2.y+6);
 }
 
-// ── INIT ──
-(function(){
-  userPin = localStorage.getItem('revolt_pin')||null;
-  if(userId){
-    const stored=localStorage.getItem('revolt_pw_'+userId);
-    if(stored){ userPin=stored; startApp(); return; }
-  }
-  showScreen('screen-setup');
-})();
-</script><script>
 const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxnWWOEhxsTqu0R49idY2R460J7G7lvNXwEVPebl8y95vlqZslVXyOzVZr3-A5GtgtnTw/exec';
 
 // ---- REFLECTIONS DATA ----
@@ -1065,13 +1055,13 @@ function normalizeDate(raw) {
   return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 }
 
-function syncHistoryFromSheets(){
-  if(!userId||!userPin) return;
+function syncHistoryFromSheets(callback){
+  if(!userId||!userPin){ if(callback) callback(); return; }
   fetch(SHEETS_URL + '?action=getHistory&userId=' + encodeURIComponent(userId) + '&password=' + encodeURIComponent(userPin))
     .then(r=>r.json())
     .then(res=>{
-      if(res.status==='ok' && Array.isArray(res.appHistory) && res.appHistory.length){
-        const normalized = res.appHistory.map(h => ({...h, datum: normalizeDate(h.datum)}));
+      if(res.status==='ok' && Array.isArray(res.history) && res.history.length){
+        const normalized = res.history.map(h => ({...h, datum: normalizeDate(h.datum)}));
         const localMap = {};
         for(const h of appHistory) localMap[h.datum] = h;
         const merged = normalized.map(h => localMap[h.datum]
@@ -1086,7 +1076,8 @@ function syncHistoryFromSheets(){
         localStorage.setItem('revolt_appHistory', JSON.stringify(appHistory));
       }
     })
-    .catch(()=>{});
+    .catch(()=>{})
+    .finally(()=>{ if(callback) callback(); });
 }
 
 function startApp(){
@@ -1173,6 +1164,14 @@ function showDoneScreen(entry){
 
 function showHistory(){
   showScreen('screen-appHistory');
+  // Show loading state
+  const statsEl = document.getElementById('appHistory-stats');
+  const listEl  = document.getElementById('appHistory-list');
+  if(statsEl) statsEl.innerHTML = '<p style="color:rgba(255,255,255,.35);font-size:13px;text-align:center;margin-top:1rem">Hämtar historik...</p>';
+  if(listEl)  listEl.innerHTML  = '';
+  const toggleBtn = document.querySelector('[onclick="toggleDayList()"]');
+  if(listEl){ listEl.style.display='none'; }
+  if(toggleBtn){ toggleBtn.textContent='Visa dagar'; }
   const render = () => {
     setTimeout(()=>{
       drawStatTriangleInline('tri-appHistory');
@@ -1181,7 +1180,7 @@ function showHistory(){
     },50);
   };
   if(userId && userPin){
-    fetchHistoryFromSheets(render);
+    syncHistoryFromSheets(render);
   } else {
     render();
   }
@@ -1226,13 +1225,6 @@ function logToSheets(zone,dag){
 }
 
 // ── INLINE HISTORY & STATS ──
-const ZONE_COLORS_MAP = {
-  'Andra':'#8FAABF','Oklart':'#A08FBF','Jag':'#7AAF8A',
-  'Omständigheter':'#BF9F7A','Samarbeten':'#7AAFBF',
-  'Sökandet':'#BF8FA0','Flödet':'#ffcc00'
-};
-const ZONE_ORDER_STAT = ['Flödet','Jag','Samarbeten','Sökandet','Andra','Oklart','Omständigheter'];
-
 function renderInlineHistory(canvasId, listId, statsId, insightId, insightTextId) {
   if(!appHistory.length) return;
 
