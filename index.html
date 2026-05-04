@@ -987,6 +987,7 @@ function verifyTempPassword(){
         localStorage.setItem('revolt_uid',userId);
         userPin=pw;
         localStorage.setItem('revolt_pw_'+userId,pw);
+        localStorage.setItem('revolt_pin',pw);
         startApp();
       } else if(res.hasPassword && !res.valid){
         // Returning user — wrong password
