@@ -417,7 +417,7 @@ function drawStatTriangleInline(canvasId){
   ctx.fillStyle='rgba(255,204,0,0.5)';ctx.fillText('Flödet',CTR2.x,CTR2.y+6);
 }
 
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxnWWOEhxsTqu0R49idY2R460J7G7lvNXwEVPebl8y95vlqZslVXyOzVZr3-A5GtgtnTw/exec';
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyAXAXZm0z9VdFuxlrBDJq6-0B5lW9cuxzVNTScg7QABON5ki-LBaOUpfqGqf-mbJMZUA/exec';
 
 // ---- REFLECTIONS DATA ----
 const REFLECTIONS = {
@@ -1112,7 +1112,12 @@ function syncHistoryFromSheets(callback){
         const localMap = {};
         for(const h of appHistory) localMap[h.datum] = h;
         const merged = normalized.map(h => localMap[h.datum]
-          ? Object.assign({}, h, {nx: localMap[h.datum].nx, ny: localMap[h.datum].ny})
+          ? Object.assign({}, h, {
+              nx:    localMap[h.datum].nx,
+              ny:    localMap[h.datum].ny,
+              obs:   h.obs   || localMap[h.datum].obs   || '',
+              testa: h.testa || localMap[h.datum].testa || ''
+            })
           : h
         );
         for(const h of appHistory){
@@ -1199,7 +1204,7 @@ function confirmCalibration(){
   appHistory.push(entry);
   localStorage.setItem('revolt_appHistory', JSON.stringify(appHistory));
   // Log to sheets
-  logToSheets(zone, dayNum);
+  logToSheets(zone, dayNum, ref.obs, ref.testa);
   // Show result
   showResultScreen(entry);
 }
@@ -1219,19 +1224,24 @@ function showResultScreen(entry){
   const missed = lastPrev && lastPrev.datum !== yesterday();
   localStorage.removeItem('revolt_missed');
   document.getElementById('missed-banner').style.display = missed ? 'block' : 'none';
+  const resObs   = entry.obs   || getReflection(entry.zone, entry.dag).obs   || '';
+  const resTesta = entry.testa || getReflection(entry.zone, entry.dag).testa || '';
   document.getElementById('res-zone-tag').textContent = entry.zone;
   document.getElementById('res-zone-label').textContent = entry.zone.toUpperCase() + ' · DAG ' + entry.dag;
-  document.getElementById('res-text').textContent = entry.obs.replace(/\\n/g,'\n');
-  document.getElementById('res-testa').textContent = entry.testa;
+  document.getElementById('res-text').textContent = resObs.replace(/\\n/g,'\n');
+  document.getElementById('res-testa').textContent = resTesta;
   prevScreen = 'screen-result';
   showScreen('screen-result');
   setTimeout(()=>renderInlineHistory('tri-result-hist','result-hist-list','result-stats','result-insight','result-insight-text'), 80);
 }
 
 function showDoneScreen(entry){
+  // obs/testa only exist in localStorage entries — reconstruct from zone+dag if missing (e.g. fresh device)
+  const obs   = entry.obs   || getReflection(entry.zone, entry.dag).obs   || '';
+  const testa = entry.testa || getReflection(entry.zone, entry.dag).testa || '';
   document.getElementById('done-zone-label').textContent = entry.zone.toUpperCase() + ' · DAG ' + entry.dag;
-  document.getElementById('done-text').textContent = (entry.obs||'').replace(/\\n/g,'\n');
-  document.getElementById('done-testa').textContent = entry.testa||'';
+  document.getElementById('done-text').textContent = obs.replace(/\\n/g,'\n');
+  document.getElementById('done-testa').textContent = testa;
   prevScreen = 'screen-done';
   showScreen('screen-done');
   setTimeout(()=>renderInlineHistory('tri-done-hist','done-hist-list','done-stats','done-insight','done-insight-text'), 80);
@@ -1313,9 +1323,9 @@ function openStats(){
   window.open('revolt-puls-statistik.html','_blank');
 }
 
-function logToSheets(zone,dag){
+function logToSheets(zone,dag,obs,testa){
   if(!userId||!userPin)return;
-  const data={datum:today(),anvandareId:userId,pin:userPin,lage:zone,dagIFoljd:dag};
+  const data={datum:today(),anvandareId:userId,pin:userPin,lage:zone,dagIFoljd:dag,obs:obs||'',testa:testa||''};
   const attempt=(n)=>{
     fetch(SHEETS_URL,{method:'POST',body:JSON.stringify(data)})
       .then(r=>r.json())
