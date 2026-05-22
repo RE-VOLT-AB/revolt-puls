@@ -1149,15 +1149,23 @@ function startApp(){
 
   // After 2 breath cycles, check state and transition
   setTimeout(function(){
-    const entry = appHistory.find(h=>h.datum===today());
-    if(entry){
-      showDoneScreen(entry);
-    } else {
+    try {
+      const entry = appHistory.find(h=>h.datum===today());
+      if(entry){
+        showDoneScreen(entry);
+      } else {
+        showScreen('screen-calibrate');
+        computeGeo(document.getElementById('tri').width);
+        ptX=CTR.x; ptY=CTR.y; currentZone=null; hasDragged=false;
+        const btn = document.getElementById('btn-kalibrera');
+        btn.style.opacity='.4'; btn.style.pointerEvents='none';
+        setTimeout(initCanvas, 50);
+      }
+    } catch(e) {
+      // Fallback — always get to calibrate screen
       showScreen('screen-calibrate');
       computeGeo(document.getElementById('tri').width);
       ptX=CTR.x; ptY=CTR.y; currentZone=null; hasDragged=false;
-      const btn = document.getElementById('btn-kalibrera');
-      btn.style.opacity='.4'; btn.style.pointerEvents='none';
       setTimeout(initCanvas, 50);
     }
   }, 6200);
@@ -1222,8 +1230,8 @@ function showResultScreen(entry){
 
 function showDoneScreen(entry){
   document.getElementById('done-zone-label').textContent = entry.zone.toUpperCase() + ' · DAG ' + entry.dag;
-  document.getElementById('done-text').textContent = entry.obs.replace(/\\n/g,'\n');
-  document.getElementById('done-testa').textContent = entry.testa;
+  document.getElementById('done-text').textContent = (entry.obs||'').replace(/\\n/g,'\n');
+  document.getElementById('done-testa').textContent = entry.testa||'';
   prevScreen = 'screen-done';
   showScreen('screen-done');
   setTimeout(()=>renderInlineHistory('tri-done-hist','done-hist-list','done-stats','done-insight','done-insight-text'), 80);
