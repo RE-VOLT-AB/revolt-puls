@@ -114,7 +114,7 @@ canvas#tri:active{cursor:grabbing}
     <p style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.6)">Innan du kalibrerar</p>
     <div id="breathe-circle" style="width:140px;height:140px;border-radius:50%;border:1.5px solid #ffcc00;box-shadow:0 0 0 0 rgba(255,204,0,0.2)"></div>
     <div>
-      <p style="font-size:22px;font-weight:500;color:#fff;margin-bottom:.5rem">Ta 3 djupa andetag</p>
+      <p style="font-size:22px;font-weight:500;color:#fff;margin-bottom:.5rem">Ta två djupa andetag</p>
       <p style="font-size:15px;color:rgba(255,255,255,.6);line-height:1.6">Landa i dig själv.<br>Kalibreringen öppnas automatiskt.</p>
     </div>
   </div>
@@ -161,6 +161,7 @@ canvas#tri:active{cursor:grabbing}
         <p class="ref-text" id="result-insight-text"></p>
       </div>
     </div>
+    <div id="result-milestones" style="width:100%;margin-top:1rem"></div>
   </div>
 
 
@@ -191,8 +192,8 @@ canvas#tri:active{cursor:grabbing}
         <p class="ref-text" id="done-insight-text"></p>
       </div>
     </div>
+    <div id="done-milestones" style="width:100%;margin-top:1rem"></div>
   </div>
-
 
 </div>
 
@@ -1147,7 +1148,7 @@ function startApp(){
   const circle = document.getElementById('breathe-circle');
   circle.style.animation = 'none';
   circle.offsetHeight; // force reflow to restart animation
-  circle.style.animation = 'breathe 3s ease-in-out 2 both';
+  circle.style.animation = 'breathe 4s ease-in-out 2 both';
 
   // Sync in background while user breathes
   syncHistoryFromSheets();
@@ -1173,7 +1174,7 @@ function startApp(){
       ptX=CTR.x; ptY=CTR.y; currentZone=null; hasDragged=false;
       setTimeout(initCanvas, 50);
     }
-  }, 6200);
+  }, 8200);
 }
 
 function checkMissed(){
@@ -1233,6 +1234,7 @@ function showResultScreen(entry){
   prevScreen = 'screen-result';
   showScreen('screen-result');
   setTimeout(()=>renderInlineHistory('tri-result-hist','result-hist-list','result-stats','result-insight','result-insight-text'), 80);
+  setTimeout(()=>renderMilestones('result-milestones'), 120);
 }
 
 function showDoneScreen(entry){
@@ -1245,6 +1247,7 @@ function showDoneScreen(entry){
   prevScreen = 'screen-done';
   showScreen('screen-done');
   setTimeout(()=>renderInlineHistory('tri-done-hist','done-hist-list','done-stats','done-insight','done-insight-text'), 80);
+  setTimeout(()=>renderMilestones('done-milestones'), 120);
 }
 
 function showHistory(){
@@ -1269,6 +1272,124 @@ function showHistory(){
   } else {
     render();
   }
+}
+
+function renderMilestones(containerId){
+  const el = document.getElementById(containerId);
+  if(!el) return;
+  const total = appHistory.length;
+  const ms = [
+    {at:7,  pos:20, hint:'Något att lära sig',    link:'https://re-volt.se/payment-link/733b8f48-782a-49ca-8ffc-a4b013a554fd'},
+    {at:14, pos:40, hint:'Något att lyssna på',   link:'https://re-volt.se/payment-link/75a1d88a-4586-4c24-a754-cef00165547b'},
+    {at:21, pos:60, hint:'Något att arbeta med',  link:'https://re-volt.se/payment-link/05189a4b-cb40-4df4-a893-2f15cbe7093e'},
+    {at:28, pos:80, hint:'Något att utmanas kring',link:'https://re-volt.se/payment-link/572c2cc3-595c-4d3d-848c-531baa08a3fb'}
+  ];
+  // 5 equal segments: 0→d1→d2→d3→d4→end, each = 7 cals, total = 35
+  const fillPct = Math.min(total / 35 * 100, 100).toFixed(1);
+
+  el.innerHTML = '';
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,204,0,0.12)';
+
+  // Bar track
+  const track = document.createElement('div');
+  track.style.cssText = 'position:relative;height:2px;background:rgba(255,204,0,0.15);border-radius:2px;margin:1.75rem 0.75rem 1rem';
+
+  // Fill
+  const fill = document.createElement('div');
+  fill.style.cssText = 'position:absolute;left:0;top:0;height:100%;width:0%;background:linear-gradient(90deg,rgba(255,204,0,0.6),#ffcc00);border-radius:2px;transition:width 1.4s cubic-bezier(.4,0,.2,1)';
+  track.appendChild(fill);
+  setTimeout(()=>{ fill.style.width = fillPct + '%'; }, 80);
+
+  // Diamonds
+  ms.forEach(m => {
+    const unlocked = total >= m.at;
+
+    // Outer anchor (positioned on bar)
+    const anchor = document.createElement('div');
+    anchor.style.cssText = `position:absolute;left:${m.pos}%;top:50%;transform:translate(-50%,-50%);width:24px;height:24px;cursor:pointer;z-index:5`;
+
+    // Diamond shape
+    const diamond = document.createElement('div');
+    diamond.style.cssText = `
+      position:absolute;top:50%;left:50%;
+      transform:translate(-50%,-50%) rotate(45deg);
+      width:11px;height:11px;
+      background:${unlocked ? '#ffcc00' : 'rgba(20,26,20,1)'};
+      border:1.5px solid ${unlocked ? '#ffcc00' : 'rgba(255,204,0,0.3)'};
+      box-shadow:${unlocked ? '0 0 12px rgba(255,204,0,0.55)' : 'none'};
+      transition:all .4s;
+    `;
+    anchor.appendChild(diamond);
+
+    // Tooltip
+    const tip = document.createElement('div');
+    const edgeShift = m.pos <= 20 ? '0%' : m.pos >= 80 ? '-100%' : '-50%';
+    tip.style.cssText = `
+      display:none;position:absolute;bottom:20px;
+      left:50%;transform:translateX(${edgeShift});
+      background:rgba(14,22,14,0.97);
+      border:1px solid rgba(255,204,0,${unlocked ? '0.6' : '0.3'});
+      border-radius:8px;padding:8px 14px;
+      font-size:13px;color:rgba(255,255,255,0.85);
+      white-space:nowrap;z-index:20;
+      box-shadow:0 4px 20px rgba(0,0,0,0.5);
+      text-align:center;
+    `;
+    const hintLine = document.createElement('div');
+    hintLine.textContent = m.hint;
+    hintLine.style.cssText = `color:${unlocked ? '#ffcc00' : 'rgba(255,255,255,0.5)'};margin-bottom:${unlocked ? '8px' : '0'}`;
+    tip.appendChild(hintLine);
+
+    if(unlocked){
+      const btn = document.createElement('a');
+      btn.href = m.link;
+      btn.target = '_blank';
+      btn.rel = 'noopener';
+      btn.textContent = 'Hämta din bonus →';
+      btn.style.cssText = `
+        display:block;margin-top:4px;
+        font-size:12px;color:#ffcc00;
+        text-decoration:none;letter-spacing:.04em;
+        border-top:1px solid rgba(255,204,0,0.2);
+        padding-top:6px;
+      `;
+      btn.addEventListener('click', e => e.stopPropagation());
+      tip.appendChild(btn);
+    } else {
+      const cal = document.createElement('div');
+      cal.textContent = (m.at - total) + ' kalibreringar kvar';
+      cal.style.cssText = 'font-size:11px;color:rgba(255,255,255,0.35);margin-top:4px';
+      tip.appendChild(cal);
+    }
+    anchor.appendChild(tip);
+
+    // Toggle on click/tap
+    anchor.addEventListener('click', e => {
+      e.stopPropagation();
+      const visible = tip.style.display === 'block';
+      // Hide all tips first
+      track.querySelectorAll('[data-tip]').forEach(t => t.style.display = 'none');
+      tip.style.display = visible ? 'none' : 'block';
+    });
+    tip.setAttribute('data-tip','1');
+
+    track.appendChild(anchor);
+  });
+
+  // Click outside closes tooltips
+  document.addEventListener('click', () => {
+    track.querySelectorAll('[data-tip]').forEach(t => t.style.display = 'none');
+  }, {capture:false});
+
+  // Counter
+  const counter = document.createElement('p');
+  counter.style.cssText = 'text-align:center;font-size:13px;color:rgba(255,255,255,.5);margin:0 0 .5rem';
+  counter.textContent = Math.min(total, 28) + ' / 28 kalibreringar';
+
+  wrap.appendChild(track);
+  wrap.appendChild(counter);
+  el.appendChild(wrap);
 }
 
 function renderHistoryList(){
