@@ -996,9 +996,13 @@ function verifyTempPassword(){
   err.textContent='Kontrollerar...';
   if(btn){btn.disabled=true;}
 
-  fetch(SHEETS_URL + '?action=verifyPassword&userId=' + encodeURIComponent(v) + '&password=' + encodeURIComponent(pw))
+  const ctrl = new AbortController();
+  const fetchTimeout = setTimeout(()=>ctrl.abort(), 8000);
+
+  fetch(SHEETS_URL + '?action=verifyPassword&userId=' + encodeURIComponent(v) + '&password=' + encodeURIComponent(pw), {signal:ctrl.signal})
     .then(r=>r.json())
     .then(res=>{
+      clearTimeout(fetchTimeout);
       if(btn){btn.disabled=false;}
       if(res.hasPassword && res.valid){
         // Returning user — password matched Sheets
@@ -1026,8 +1030,9 @@ function verifyTempPassword(){
       }
     })
     .catch(()=>{
-      // Fallback if Sheets unreachable — use local cache
+      clearTimeout(fetchTimeout);
       if(btn){btn.disabled=false;}
+      // Fallback if Sheets unreachable — use local cache
       const existing=localStorage.getItem('revolt_pw_'+v);
       if(existing && pw===existing){
         err.textContent='';
@@ -1038,7 +1043,7 @@ function verifyTempPassword(){
         err.textContent='Felaktigt lösenord. Kontakta Oscar om du behöver hjälp.';
       } else {
         const validTemp = pw===(v+'369') || pw.startsWith('rv-');
-        if(!validTemp){err.textContent='Felaktigt lösenord. Kontakta Oscar om du behöver hjälp.';return;}
+        if(!validTemp){err.textContent='Kunde inte nå servern. Kontrollera din uppkoppling och försök igen.';return;}
         err.textContent='';
         userId=v;
         localStorage.setItem('revolt_uid',userId);
@@ -1137,12 +1142,12 @@ function startApp(){
   const circle = document.getElementById('breathe-circle');
   circle.style.animation = 'none';
   circle.offsetHeight; // force reflow to restart animation
-  circle.style.animation = 'breathe 3s ease-in-out 3 both';
+  circle.style.animation = 'breathe 3s ease-in-out 2 both';
 
   // Sync in background while user breathes
   syncHistoryFromSheets();
 
-  // After 3 breath cycles, check state and transition
+  // After 2 breath cycles, check state and transition
   setTimeout(function(){
     const entry = appHistory.find(h=>h.datum===today());
     if(entry){
@@ -1155,7 +1160,7 @@ function startApp(){
       btn.style.opacity='.4'; btn.style.pointerEvents='none';
       setTimeout(initCanvas, 50);
     }
-  }, 9500);
+  }, 6200);
 }
 
 function checkMissed(){
