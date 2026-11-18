@@ -43,6 +43,70 @@ canvas#tri:active{cursor:grabbing}
 .setup-note{font-size:13px;color:rgba(255,255,255,.6);text-align:center;line-height:1.55;margin-top:1rem}
 .stats-pill{position:absolute;top:1rem;right:1rem;padding:6px 16px;background:transparent;border:1px solid rgba(255,204,0,.35);border-radius:20px;color:rgba(255,204,0,.75);font-size:12px;font-family:inherit;cursor:pointer;letter-spacing:.05em;transition:all .15s;z-index:10}
 .stats-pill:hover{border-color:#ffcc00;color:#ffcc00}
+
+/* ── GUIDE + BONUS ── */
+.guide-pill{position:absolute;top:1rem;left:1rem;padding:6px 16px;background:transparent;border:1px solid rgba(255,255,255,.22);border-radius:20px;color:rgba(255,255,255,.75);font-size:12px;font-family:inherit;cursor:pointer;letter-spacing:.05em;transition:all .15s;z-index:10}
+.guide-pill:hover{border-color:rgba(255,255,255,.6);color:#fff}
+.link-btn{background:none;border:none;color:rgba(255,204,0,.85);font-family:inherit;font-size:13px;cursor:pointer;padding:6px 4px;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(255,204,0,.35)}
+.link-row{width:100%;text-align:center;margin:-.25rem 0 1rem}
+.bonus-strip{position:relative;overflow:hidden;width:100%;margin-top:.9rem;display:flex;align-items:center;gap:12px;padding:13px 14px 14px;background:rgba(255,204,0,.05);border:1px solid rgba(255,204,0,.28);border-radius:10px;color:rgba(255,255,255,.88);font-family:inherit;font-size:14px;text-align:left;cursor:pointer}
+.bonus-strip.has-new{background:rgba(255,204,0,.13);border-color:#ffcc00;color:#fff;animation:bonusGlow 2.4s ease-in-out infinite}
+.bs-text{flex:1;line-height:1.35}
+.bs-arrow{flex:none;font-size:12px;color:#ffcc00;letter-spacing:.05em}
+.bs-bar{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(255,204,0,.12)}
+.bs-bar span{display:block;height:100%;background:#ffcc00}
+.bonus-dia{flex:none;display:inline-block;width:10px;height:10px;transform:rotate(45deg);border:1.5px solid rgba(255,204,0,.5);background:transparent}
+.bonus-dia.on{background:#ffcc00;border-color:#ffcc00;box-shadow:0 0 10px rgba(255,204,0,.55)}
+.bonus-card{width:100%;background:rgba(255,204,0,.04);border:1px solid rgba(255,204,0,.3);border-radius:12px;padding:1.1rem 1rem 1rem;margin-bottom:.5rem}
+.bonus-card.flat{background:none;border:none;padding:0;margin:0}
+.bonus-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem}
+.bonus-count{font-size:12px;color:rgba(255,255,255,.55)}
+.bonus-headline{font-size:16px;font-weight:500;color:#fff;line-height:1.4}
+.bonus-headline strong{color:#ffcc00}
+.bonus-sub{font-size:13px;color:rgba(255,255,255,.6);margin-top:.2rem;line-height:1.5}
+.bonus-track{position:relative;height:3px;background:rgba(255,204,0,.15);border-radius:2px;margin:1.3rem 8px 1.2rem}
+.bonus-fill{position:absolute;left:0;top:0;height:100%;width:0;background:linear-gradient(90deg,rgba(255,204,0,.6),#ffcc00);border-radius:2px;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+.bonus-track .bonus-dia{position:absolute;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;background:#141a14}
+.bonus-track .bonus-dia.on{background:#ffcc00}
+.bonus-row{display:flex;align-items:center;gap:12px;padding:.7rem .8rem;border-radius:10px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.02);margin-top:.45rem}
+.bonus-row.on{border-color:rgba(255,204,0,.35);background:rgba(255,204,0,.07)}
+.bonus-txt{flex:1;min-width:0}
+.bonus-name{font-size:15px;color:rgba(255,255,255,.55)}
+.bonus-row.on .bonus-name{color:#fff;font-weight:500}
+.bonus-meta{font-size:12px;color:rgba(255,255,255,.42);margin-top:2px}
+.bonus-get{flex:none;background:#ffcc00;color:#1a1200;font-size:13px;font-weight:600;text-decoration:none;padding:8px 14px;border-radius:7px}
+.bonus-left{flex:none;font-size:12px;color:rgba(255,255,255,.42)}
+.bonus-badge{flex:none;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#1a1200;background:rgba(255,204,0,.85);padding:2px 7px;border-radius:10px}
+.bonus-new-banner{display:flex;gap:12px;align-items:center;background:rgba(255,204,0,.14);border:1px solid #ffcc00;border-radius:10px;padding:.8rem .9rem;margin-bottom:.9rem;animation:bonusGlow 2.4s ease-in-out 3}
+.bnb-title{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#ffcc00}
+.bnb-sub{font-size:14px;color:#fff;margin-top:2px;line-height:1.4}
+@keyframes bonusGlow{0%,100%{box-shadow:0 0 0 rgba(255,204,0,0)}50%{box-shadow:0 0 22px rgba(255,204,0,.35)}}
+.overlay{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:1rem;background:rgba(6,12,6,.94)}
+.overlay.open{display:flex}
+.sheet{width:100%;max-width:440px;max-height:calc(100vh - 2rem);overflow-y:auto;background:#141a14;border:1px solid rgba(255,204,0,.2);border-radius:16px;padding:1.25rem 1.25rem 1.1rem}
+.sheet-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.guide-step{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,204,0,.75)}
+.sheet-close{background:none;border:none;color:rgba(255,255,255,.55);font-family:inherit;font-size:13px;cursor:pointer;padding:4px}
+.sheet-close:hover{color:#fff}
+.guide-title{font-size:20px;font-weight:500;color:#fff;margin-bottom:.9rem;line-height:1.35}
+.guide-text{font-size:15px;line-height:1.65;color:rgba(255,255,255,.85);min-height:230px}
+.guide-text p{margin-bottom:.8rem}
+.guide-text strong{color:#ffcc00;font-weight:500}
+.guide-text ol{padding-left:1.25rem;margin-bottom:.8rem}
+.guide-text li{margin-bottom:.35rem}
+.guide-q{background:rgba(255,204,0,.08);border-left:2px solid #ffcc00;padding:10px 14px;margin:.2rem 0 .9rem;color:#fff;line-height:1.8}
+.guide-zone{padding:.42rem 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:14px}
+.guide-zone b{font-weight:600;margin-right:6px}
+.guide-zone span{color:rgba(255,255,255,.8)}
+.guide-zone i{display:block;font-style:normal;font-size:12px;color:rgba(255,255,255,.45)}
+.guide-svg{display:block;width:150px;height:auto;margin:0 auto 1rem}
+.guide-dots{display:flex;justify-content:center;gap:8px;margin:1.1rem 0 .9rem}
+.guide-dots button{width:8px;height:8px;border-radius:4px;border:none;padding:0;background:rgba(255,204,0,.25);cursor:pointer;transition:all .2s}
+.guide-dots button.on{background:#ffcc00;width:22px}
+.guide-nav{display:flex;gap:.6rem}
+.guide-nav .btn{margin-top:0;flex:1}
+.book-btn{display:none;text-align:center;text-decoration:none;margin:-.25rem 0 1rem}
+.guide-text .book-btn{display:block;margin:.4rem 0 0}
 @keyframes breathe{
   0%  {transform:scale(0.65);opacity:0.35;box-shadow:0 0 0 0 rgba(255,204,0,0.15)}
   50% {transform:scale(1.25);opacity:1;  box-shadow:0 0 50px 15px rgba(255,204,0,0.12)}
@@ -121,6 +185,7 @@ canvas#tri:active{cursor:grabbing}
 </div>
 
 <div class="screen" id="screen-calibrate" style="position:relative">
+  <button class="guide-pill" onclick="openGuide(0)">Guide</button>
   <button class="stats-pill" onclick="showHistory()">Se dina mönster</button>
   <img class="logo" src="data:image/png;base64,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" alt="RE-VOLT">
   <p id="user-name-display" style="font-size:14px;font-weight:700;color:#fff;text-align:center;margin-bottom:.15rem;min-height:18px;letter-spacing:.01em"></p>
@@ -132,6 +197,7 @@ canvas#tri:active{cursor:grabbing}
   <div class="confirm-wrap">
     <button class="btn" id="btn-kalibrera" onclick="confirmCalibration()" style="opacity:.4;pointer-events:none">Kalibrera</button>
   </div>
+  <button class="bonus-strip" id="cal-bonus-strip" onclick="openBonusSheet()"></button>
 </div>
 
 <!-- RESULT SCREEN -->
@@ -147,10 +213,15 @@ canvas#tri:active{cursor:grabbing}
     <p class="testa-label">Testa detta</p>
     <p class="testa-text" id="res-testa"></p>
   </div>
+  <a class="btn book-btn" id="res-book" href="#" target="_blank" rel="noopener">Boka en kalibrering</a>
+  <div class="link-row"><button class="link-btn" onclick="openGuide(3)">Hur läser jag det här?</button></div>
+
+  <div id="result-milestones" style="width:100%"></div>
 
   <!-- Inline appHistory & analysis -->
   <div id="inline-appHistory" style="width:100%;margin-top:1.5rem">
     <p style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:.75rem">Dina senaste 3 veckor</p>
+    <div class="link-row" style="margin:-.5rem 0 .5rem"><button class="link-btn" onclick="openGuide(4)">Hur läser jag mönstret?</button></div>
     <canvas id="tri-result-hist" width="800" height="800" style="width:100%;max-width:380px;height:auto;aspect-ratio:1/1;display:block;margin:0 auto"></canvas>
     <div id="result-hist-list" style="width:100%;margin-top:.75rem"></div>
 
@@ -161,7 +232,6 @@ canvas#tri:active{cursor:grabbing}
         <p class="ref-text" id="result-insight-text"></p>
       </div>
     </div>
-    <div id="result-milestones" style="width:100%;margin-top:1rem"></div>
   </div>
 
 
@@ -178,11 +248,16 @@ canvas#tri:active{cursor:grabbing}
     <p class="testa-label">Testa detta</p>
     <p class="testa-text" id="done-testa"></p>
   </div>
+  <a class="btn book-btn" id="done-book" href="#" target="_blank" rel="noopener">Boka en kalibrering</a>
+  <div class="link-row"><button class="link-btn" onclick="openGuide(3)">Hur läser jag det här?</button></div>
+
+  <div id="done-milestones" style="width:100%"></div>
   <p class="sub" style="margin-top:.5rem">Kom tillbaka imorgon för nästa kalibrering.</p>
 
   <!-- Inline appHistory & analysis -->
   <div id="inline-appHistory-done" style="width:100%;margin-top:1.5rem">
     <p style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:.75rem">Dina senaste 3 veckor</p>
+    <div class="link-row" style="margin:-.5rem 0 .5rem"><button class="link-btn" onclick="openGuide(4)">Hur läser jag mönstret?</button></div>
     <canvas id="tri-done-hist" width="800" height="800" style="width:100%;max-width:380px;height:auto;aspect-ratio:1/1;display:block;margin:0 auto"></canvas>
     <div id="done-hist-list" style="width:100%;margin-top:.75rem"></div>
     <div id="done-stats" style="width:100%;margin-top:1.25rem"></div>
@@ -192,7 +267,6 @@ canvas#tri:active{cursor:grabbing}
         <p class="ref-text" id="done-insight-text"></p>
       </div>
     </div>
-    <div id="done-milestones" style="width:100%;margin-top:1rem"></div>
   </div>
 
 </div>
@@ -203,7 +277,36 @@ canvas#tri:active{cursor:grabbing}
   <p style="font-size:12px;letter-spacing:.05em;color:rgba(255,255,255,.6);text-align:center;margin-top:-.5rem;margin-bottom:.5rem">Dina senaste 3 veckor</p>
   <canvas id="tri-appHistory" width="800" height="800" style="width:100%;max-width:400px;height:auto;aspect-ratio:1/1;display:block;margin:0 auto"></canvas>
   <div id="appHistory-list" style="width:100%;margin-top:1rem"></div>
-  <button class="btn secondary" style="margin-top:1rem" onclick="goBack()">Tillbaka</button>
+  <div class="link-row" style="margin-top:1rem"><button class="link-btn" onclick="openGuide(4)">Hur läser jag mönstret?</button></div>
+  <button class="btn secondary" style="margin-top:.25rem" onclick="goBack()">Tillbaka</button>
+</div>
+
+<!-- GUIDE OVERLAY -->
+<div class="overlay" id="guide-overlay">
+  <div class="sheet" id="guide-sheet">
+    <div class="sheet-top">
+      <span class="guide-step" id="guide-count"></span>
+      <button class="sheet-close" id="guide-skip" onclick="closeGuide()">Hoppa över</button>
+    </div>
+    <div id="guide-body"></div>
+    <div class="guide-dots" id="guide-dots"></div>
+    <div class="guide-nav">
+      <button class="btn secondary" id="guide-prev" onclick="guidePrev()">Tillbaka</button>
+      <button class="btn" id="guide-next" onclick="guideNext()">Nästa</button>
+    </div>
+  </div>
+</div>
+
+<!-- BONUS OVERLAY -->
+<div class="overlay" id="bonus-overlay" onclick="if(event.target===this)closeBonusSheet()">
+  <div class="sheet">
+    <div class="sheet-top">
+      <span></span>
+      <button class="sheet-close" onclick="closeBonusSheet()">Stäng</button>
+    </div>
+    <div id="bonus-sheet-body"></div>
+    <button class="btn secondary" onclick="closeBonusSheet()">Stäng</button>
+  </div>
 </div>
 
 <script>
@@ -1135,6 +1238,8 @@ function syncHistoryFromSheets(callback){
 
 function startApp(){
   if(!userId){ showScreen('screen-setup'); return; }
+  // Första gången: visa guiden innan kalibreringen
+  if(!localStorage.getItem('revolt_guide_seen')){ openGuide(0, true, startApp); return; }
   fetchAndCacheUserName();
 
   const localTodayEntry = appHistory.find(h=>h.datum===today());
@@ -1161,6 +1266,7 @@ function startApp(){
         showDoneScreen(entry);
       } else {
         showScreen('screen-calibrate');
+        updateBonusStrip();
         computeGeo(document.getElementById('tri').width);
         ptX=CTR.x; ptY=CTR.y; currentZone=null; hasDragged=false;
         const btn = document.getElementById('btn-kalibrera');
@@ -1170,6 +1276,7 @@ function startApp(){
     } catch(e) {
       // Fallback — always get to calibrate screen
       showScreen('screen-calibrate');
+      updateBonusStrip();
       computeGeo(document.getElementById('tri').width);
       ptX=CTR.x; ptY=CTR.y; currentZone=null; hasDragged=false;
       setTimeout(initCanvas, 50);
@@ -1231,10 +1338,11 @@ function showResultScreen(entry){
   document.getElementById('res-zone-label').textContent = entry.zone.toUpperCase() + ' · DAG ' + entry.dag;
   document.getElementById('res-text').textContent = resObs.replace(/\\n/g,'\n');
   document.getElementById('res-testa').textContent = resTesta;
+  toggleBookBtn('res-book', resTesta);
   prevScreen = 'screen-result';
   showScreen('screen-result');
   setTimeout(()=>renderInlineHistory('tri-result-hist','result-hist-list','result-stats','result-insight','result-insight-text'), 80);
-  setTimeout(()=>renderMilestones('result-milestones'), 120);
+  setTimeout(()=>renderMilestones('result-milestones', true), 120);
 }
 
 function showDoneScreen(entry){
@@ -1244,6 +1352,7 @@ function showDoneScreen(entry){
   document.getElementById('done-zone-label').textContent = entry.zone.toUpperCase() + ' · DAG ' + entry.dag;
   document.getElementById('done-text').textContent = obs.replace(/\\n/g,'\n');
   document.getElementById('done-testa').textContent = testa;
+  toggleBookBtn('done-book', testa);
   prevScreen = 'screen-done';
   showScreen('screen-done');
   setTimeout(()=>renderInlineHistory('tri-done-hist','done-hist-list','done-stats','done-insight','done-insight-text'), 80);
@@ -1274,123 +1383,270 @@ function showHistory(){
   }
 }
 
-function renderMilestones(containerId){
+// ── BONUSAR ──
+const BONUSES = [
+  {at:7,  hint:'Något att lära sig',      link:'https://re-volt.se/payment-link/733b8f48-782a-49ca-8ffc-a4b013a554fd'},
+  {at:14, hint:'Något att lyssna på',     link:'https://re-volt.se/payment-link/75a1d88a-4586-4c24-a754-cef00165547b'},
+  {at:21, hint:'Något att arbeta med',    link:'https://re-volt.se/payment-link/05189a4b-cb40-4df4-a893-2f15cbe7093e'},
+  {at:28, hint:'Något att utmanas kring', link:'https://re-volt.se/payment-link/572c2cc3-595c-4d3d-848c-531baa08a3fb'}
+];
+const BONUS_MAX = 28;
+const BOOKING_URL = 'https://bookings.cloud.microsoft/bookwithme/user/86e43ea7e669461f8a1ca7220b707b46%40re-volt.se/meetingtype/EGntA_O7WU6tTOkBhgVyHw2?anonymous&ismsaljsauthenabled';
+
+function toggleBookBtn(id, testa){
+  const a = document.getElementById(id);
+  if(!a) return;
+  a.href = BOOKING_URL;
+  a.style.display = /boka en kalibrering/i.test(testa||'') ? 'block' : 'none';
+}
+
+function calCount(){ return appHistory.length; }
+function kalWord(n){ return n===1 ? 'kalibrering' : 'kalibreringar'; }
+function bonusKey(){ return 'revolt_bonus_opened_'+(userId||'anon'); }
+function getOpenedBonuses(){
+  try { return JSON.parse(localStorage.getItem(bonusKey())||'[]'); } catch(e){ return []; }
+}
+function markBonusOpened(at){
+  const o = getOpenedBonuses();
+  if(!o.includes(at)){ o.push(at); localStorage.setItem(bonusKey(), JSON.stringify(o)); }
+  document.querySelectorAll('[data-bonus-new="'+at+'"]').forEach(el=>el.remove());
+  updateBonusStrip();
+}
+
+function buildBonusBlock(opts){
+  opts = opts || {};
+  const total  = calCount();
+  const opened = getOpenedBonuses();
+  const next   = BONUSES.find(b => total < b.at);
+  const fresh  = opts.celebrate ? BONUSES.find(b => b.at === total) : null;
+
+  let html = '<div class="bonus-head"><span class="ref-zone" style="margin:0">Dina bonusar</span><span class="bonus-count">'+Math.min(total,BONUS_MAX)+' / '+BONUS_MAX+' kalibreringar</span></div>';
+
+  if(fresh){
+    html += '<div class="bonus-new-banner"><span class="bonus-dia on"></span><div>'+
+              '<p class="bnb-title">Ny bonus upplåst</p>'+
+              '<p class="bnb-sub">'+fresh.hint+'. Hämta den nedan.</p>'+
+            '</div></div>';
+  }
+
+  if(next){
+    const left = next.at - total;
+    html += '<p class="bonus-headline">Nästa bonus om <strong>'+left+'</strong> '+kalWord(left)+'</p>';
+  } else {
+    html += '<p class="bonus-headline">Alla fyra bonusar är upplåsta</p>';
+  }
+  html += '<p class="bonus-sub">Var 7:e kalibrering låser upp en bonus.</p>';
+
+  // Progress bar with diamonds
+  html += '<div class="bonus-track"><div class="bonus-fill"></div>';
+  for(const b of BONUSES){
+    html += '<span class="bonus-dia'+(total>=b.at?' on':'')+'" style="left:'+(b.at/BONUS_MAX*100)+'%"></span>';
+  }
+  html += '</div>';
+
+  // Rows
+  for(const b of BONUSES){
+    const un = total >= b.at;
+    const isNew = un && !opened.includes(b.at);
+    html += '<div class="bonus-row'+(un?' on':'')+'">'+
+              '<span class="bonus-dia'+(un?' on':'')+'"></span>'+
+              '<div class="bonus-txt">'+
+                '<p class="bonus-name">'+b.hint+'</p>'+
+                '<p class="bonus-meta">'+(un ? 'Upplåst vid kalibrering '+b.at : 'Låses upp vid kalibrering '+b.at)+'</p>'+
+              '</div>'+
+              (un
+                ? (isNew ? '<span class="bonus-badge" data-bonus-new="'+b.at+'">Ny</span>' : '')+
+                  '<a class="bonus-get" href="'+b.link+'" target="_blank" rel="noopener" onclick="markBonusOpened('+b.at+')">Hämta</a>'
+                : '<span class="bonus-left">'+(b.at-total)+' kvar</span>')+
+            '</div>';
+  }
+
+  const wrap = document.createElement('div');
+  wrap.className = opts.flat ? 'bonus-card flat' : 'bonus-card';
+  wrap.innerHTML = html;
+  const fill = wrap.querySelector('.bonus-fill');
+  const pct = Math.min(total/BONUS_MAX*100, 100).toFixed(1);
+  setTimeout(()=>{ if(fill) fill.style.width = pct+'%'; }, 120);
+  return wrap;
+}
+
+function renderMilestones(containerId, celebrate){
   const el = document.getElementById(containerId);
   if(!el) return;
-  const total = appHistory.length;
-  const ms = [
-    {at:7,  pos:20, hint:'Något att lära sig',    link:'https://re-volt.se/payment-link/733b8f48-782a-49ca-8ffc-a4b013a554fd'},
-    {at:14, pos:40, hint:'Något att lyssna på',   link:'https://re-volt.se/payment-link/75a1d88a-4586-4c24-a754-cef00165547b'},
-    {at:21, pos:60, hint:'Något att arbeta med',  link:'https://re-volt.se/payment-link/05189a4b-cb40-4df4-a893-2f15cbe7093e'},
-    {at:28, pos:80, hint:'Något att utmanas kring',link:'https://re-volt.se/payment-link/572c2cc3-595c-4d3d-848c-531baa08a3fb'}
-  ];
-  // 5 equal segments: 0→d1→d2→d3→d4→end, each = 7 cals, total = 35
-  const fillPct = Math.min(total / 35 * 100, 100).toFixed(1);
-
   el.innerHTML = '';
-  const wrap = document.createElement('div');
-  wrap.style.cssText = 'margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,204,0,0.12)';
-
-  // Bar track
-  const track = document.createElement('div');
-  track.style.cssText = 'position:relative;height:2px;background:rgba(255,204,0,0.15);border-radius:2px;margin:1.75rem 0.75rem 1rem';
-
-  // Fill
-  const fill = document.createElement('div');
-  fill.style.cssText = 'position:absolute;left:0;top:0;height:100%;width:0%;background:linear-gradient(90deg,rgba(255,204,0,0.6),#ffcc00);border-radius:2px;transition:width 1.4s cubic-bezier(.4,0,.2,1)';
-  track.appendChild(fill);
-  setTimeout(()=>{ fill.style.width = fillPct + '%'; }, 80);
-
-  // Diamonds
-  ms.forEach(m => {
-    const unlocked = total >= m.at;
-
-    // Outer anchor (positioned on bar)
-    const anchor = document.createElement('div');
-    anchor.style.cssText = `position:absolute;left:${m.pos}%;top:50%;transform:translate(-50%,-50%);width:24px;height:24px;cursor:pointer;z-index:5`;
-
-    // Diamond shape
-    const diamond = document.createElement('div');
-    diamond.style.cssText = `
-      position:absolute;top:50%;left:50%;
-      transform:translate(-50%,-50%) rotate(45deg);
-      width:11px;height:11px;
-      background:${unlocked ? '#ffcc00' : 'rgba(20,26,20,1)'};
-      border:1.5px solid ${unlocked ? '#ffcc00' : 'rgba(255,204,0,0.3)'};
-      box-shadow:${unlocked ? '0 0 12px rgba(255,204,0,0.55)' : 'none'};
-      transition:all .4s;
-    `;
-    anchor.appendChild(diamond);
-
-    // Tooltip
-    const tip = document.createElement('div');
-    const edgeShift = m.pos <= 20 ? '0%' : m.pos >= 80 ? '-100%' : '-50%';
-    tip.style.cssText = `
-      display:none;position:absolute;bottom:20px;
-      left:50%;transform:translateX(${edgeShift});
-      background:rgba(14,22,14,0.97);
-      border:1px solid rgba(255,204,0,${unlocked ? '0.6' : '0.3'});
-      border-radius:8px;padding:8px 14px;
-      font-size:13px;color:rgba(255,255,255,0.85);
-      white-space:nowrap;z-index:20;
-      box-shadow:0 4px 20px rgba(0,0,0,0.5);
-      text-align:center;
-    `;
-    const hintLine = document.createElement('div');
-    hintLine.textContent = m.hint;
-    hintLine.style.cssText = `color:${unlocked ? '#ffcc00' : 'rgba(255,255,255,0.5)'};margin-bottom:${unlocked ? '8px' : '0'}`;
-    tip.appendChild(hintLine);
-
-    if(unlocked){
-      const btn = document.createElement('a');
-      btn.href = m.link;
-      btn.target = '_blank';
-      btn.rel = 'noopener';
-      btn.textContent = 'Hämta din bonus →';
-      btn.style.cssText = `
-        display:block;margin-top:4px;
-        font-size:12px;color:#ffcc00;
-        text-decoration:none;letter-spacing:.04em;
-        border-top:1px solid rgba(255,204,0,0.2);
-        padding-top:6px;
-      `;
-      btn.addEventListener('click', e => e.stopPropagation());
-      tip.appendChild(btn);
-    } else {
-      const cal = document.createElement('div');
-      cal.textContent = (m.at - total) + ' kalibreringar kvar';
-      cal.style.cssText = 'font-size:11px;color:rgba(255,255,255,0.35);margin-top:4px';
-      tip.appendChild(cal);
-    }
-    anchor.appendChild(tip);
-
-    // Toggle on click/tap
-    anchor.addEventListener('click', e => {
-      e.stopPropagation();
-      const visible = tip.style.display === 'block';
-      // Hide all tips first
-      track.querySelectorAll('[data-tip]').forEach(t => t.style.display = 'none');
-      tip.style.display = visible ? 'none' : 'block';
-    });
-    tip.setAttribute('data-tip','1');
-
-    track.appendChild(anchor);
-  });
-
-  // Click outside closes tooltips
-  document.addEventListener('click', () => {
-    track.querySelectorAll('[data-tip]').forEach(t => t.style.display = 'none');
-  }, {capture:false});
-
-  // Counter
-  const counter = document.createElement('p');
-  counter.style.cssText = 'text-align:center;font-size:13px;color:rgba(255,255,255,.5);margin:0 0 .5rem';
-  counter.textContent = Math.min(total, 28) + ' / 28 kalibreringar';
-
-  wrap.appendChild(track);
-  wrap.appendChild(counter);
-  el.appendChild(wrap);
+  el.appendChild(buildBonusBlock({celebrate:!!celebrate}));
 }
+
+function updateBonusStrip(){
+  const el = document.getElementById('cal-bonus-strip');
+  if(!el) return;
+  const total    = calCount();
+  const opened   = getOpenedBonuses();
+  const unopened = BONUSES.filter(b => total >= b.at && !opened.includes(b.at));
+  const next     = BONUSES.find(b => total < b.at);
+  let text, bar = '';
+  if(unopened.length){
+    text = 'Du har '+(unopened.length===1 ? 'en bonus' : unopened.length+' bonusar')+' att hämta';
+  } else if(next){
+    const left = next.at - total;
+    text = left===1 ? 'Dagens kalibrering låser upp nästa bonus' : 'Nästa bonus om '+left+' kalibreringar';
+    const pct = Math.max(0, Math.min(100, (total-(next.at-7))/7*100));
+    bar = '<span class="bs-bar"><span style="width:'+pct+'%"></span></span>';
+  } else {
+    text = 'Alla bonusar upplåsta';
+  }
+  el.classList.toggle('has-new', unopened.length>0);
+  el.innerHTML = '<span class="bonus-dia'+(unopened.length?' on':'')+'"></span><span class="bs-text">'+text+'</span><span class="bs-arrow">Visa</span>'+bar;
+}
+
+function openBonusSheet(){
+  const body = document.getElementById('bonus-sheet-body');
+  body.innerHTML = '';
+  body.appendChild(buildBonusBlock({flat:true}));
+  document.getElementById('bonus-overlay').classList.add('open');
+}
+function closeBonusSheet(){
+  document.getElementById('bonus-overlay').classList.remove('open');
+}
+
+// ── GUIDE ──
+// Texterna är lätta att justera här. En rad = ett steg i guiden.
+const GUIDE_ZONES = [
+  ['Jag',            'Jag leder från min vilja.',        'Hörnet nere till höger'],
+  ['Andra',          'Jag låter andra styra.',           'Hörnet nere till vänster'],
+  ['Oklart',         'Jag vet inte.',                    'Toppen'],
+  ['Omständigheter', 'Jag reagerar på omständigheter.',  'Vänster sida'],
+  ['Sökandet',       'Jag söker just nu.',               'Höger sida'],
+  ['Samarbeten',     'Jag leder tillsammans med andra.', 'Botten'],
+  ['Flödet',         'Jag agerar från klarhet.',         'Mitten']
+];
+
+const GUIDE_SVG =
+  '<svg class="guide-svg" viewBox="0 0 200 175" xmlns="http://www.w3.org/2000/svg">'+
+    '<polygon points="100,18 18,150 182,150" fill="none" stroke="#ffcc00" stroke-width="3" stroke-linejoin="round"/>'+
+    '<text x="100" y="11" fill="rgba(255,255,255,.75)" font-size="11" text-anchor="middle" font-family="sans-serif">Oklart</text>'+
+    '<text x="18" y="166" fill="rgba(255,255,255,.75)" font-size="11" text-anchor="middle" font-family="sans-serif">Andra</text>'+
+    '<text x="182" y="166" fill="rgba(255,255,255,.75)" font-size="11" text-anchor="middle" font-family="sans-serif">Jag</text>'+
+    '<circle r="7" fill="#ffcc00"><animateMotion dur="7s" repeatCount="indefinite" path="M100,105 L140,128 L62,130 L95,62 Z"/></circle>'+
+  '</svg>';
+
+const GUIDE_STEPS = [
+  {
+    title:'Välkommen till RE-Puls',
+    body:()=>'<p>En minut om dagen där du stannar upp och ser vad som styr dig just nu.</p>'+
+             '<p>Det finns inget rätt eller fel svar. Poängen är att se ditt mönster över tid, så att du kan välja mer medvetet.</p>'+
+             '<p>Guiden tar en minut. Du hittar den sen under <strong>Guide</strong> uppe till vänster.</p>'
+  },
+  {
+    title:'Så kalibrerar du',
+    body:()=>GUIDE_SVG+
+             '<ol><li>Ta två djupa andetag och landa.</li>'+
+             '<li>Dra punkten i triangeln dit som bäst matchar vad som styr dig här och nu.</li>'+
+             '<li>Tryck <strong>Kalibrera</strong>.</li></ol>'+
+             '<p>En kalibrering per dag. Gå på första känslan, inte på vad du tycker att du borde svara.</p>'
+  },
+  {
+    title:'De sju lägena',
+    body:()=>GUIDE_ZONES.map(z=>'<div class="guide-zone"><b style="color:'+(ZONE_COLORS_MAP[z[0]]||'#ffcc00')+'">'+z[0]+'</b><span>'+z[1]+'</span><i>'+z[2]+'</i></div>').join('')+
+             '<p style="margin-top:.9rem">Inget läge är fel. Varje läge ger dig något och kostar dig något.</p>'
+  },
+  {
+    title:'Läs ditt resultat',
+    body:()=>'<p><strong>Speglingen</strong> är en observation att bära med dig under dagen. Inte en sanning om dig. Känn efter vad som stämmer.</p>'+
+             '<p><strong>Testa detta</strong> är ett konkret steg för idag. Gör det. Insikt utan action förändrar inget.</p>'+
+             '<p>Landar du i samma läge flera dagar i rad fördjupas texterna. Från dag 3 pekar dom på ett mönster.</p>'
+  },
+  {
+    title:'Läs ditt mönster',
+    body:()=>'<p><strong>Triangeln</strong> visar dina senaste 3 veckor. Varje prick är en dag. Där prickarna samlas landar du ofta.</p>'+
+             '<p><strong>Vanligaste lägen</strong> visar hur dina kalibreringar fördelar sig.</p>'+
+             '<p><strong>Mönsterinsikt</strong> dyker upp efter 3 kalibreringar och visar om något håller på att förändras.</p>'+
+             '<p><strong>Okalibrerade dagar</strong> räknas också. Dagarna du hoppar över kan säga lika mycket som dom du checkar in.</p>'
+  },
+  {
+    title:'Vad gör du med det?',
+    body:()=>'<p>När du ser ett mönster, ställ tre frågor:</p>'+
+             '<div class="guide-q">Vad ger det här läget mig?<br>Vad kostar det mig?<br>Vill jag fortsätta välja det?</div>'+
+             '<p>Du äger valet. Ibland är svaret att fortsätta precis som nu, fast av ett mer medvetet skäl.</p>'+
+             '<p>Återkommer samma mönster och du vill komma vidare, boka en kalibrering med mig så tittar vi på det tillsammans.</p>'+
+             '<a class="btn book-btn" href="'+BOOKING_URL+'" target="_blank" rel="noopener">Boka en kalibrering</a>'
+  },
+  {
+    title:'Dina bonusar',
+    body:()=>{
+      const total = calCount();
+      const next  = BONUSES.find(b => total < b.at);
+      return '<p>Var 7:e kalibrering låser upp en bonus.</p>'+
+        BONUSES.map(b=>'<div class="guide-zone"><b style="color:#ffcc00">'+b.at+'</b><span>'+b.hint+'</span></div>').join('')+
+        '<p style="margin-top:.9rem">Du ser hur nära du är under triangeln och på resultatsidan.'+
+        (next ? ' Just nu har du '+total+' '+kalWord(total)+'.' : ' Du har låst upp alla.')+'</p>';
+    }
+  }
+];
+
+let guideIdx = 0, guideFirstRun = false, guideOnDone = null;
+
+function openGuide(step, firstRun, onDone){
+  guideIdx = Math.max(0, Math.min(step||0, GUIDE_STEPS.length-1));
+  guideFirstRun = !!firstRun;
+  guideOnDone = onDone || null;
+  renderGuide();
+  document.getElementById('guide-overlay').classList.add('open');
+}
+
+function renderGuide(){
+  const s = GUIDE_STEPS[guideIdx];
+  const last = guideIdx === GUIDE_STEPS.length-1;
+  document.getElementById('guide-count').textContent = 'Guide · '+(guideIdx+1)+' av '+GUIDE_STEPS.length;
+  document.getElementById('guide-body').innerHTML =
+    '<h2 class="guide-title">'+s.title+'</h2><div class="guide-text">'+s.body()+'</div>';
+  const dots = document.getElementById('guide-dots');
+  dots.innerHTML = '';
+  GUIDE_STEPS.forEach((_,i)=>{
+    const d = document.createElement('button');
+    d.className = i===guideIdx ? 'on' : '';
+    d.setAttribute('aria-label','Steg '+(i+1));
+    d.onclick = ()=>{ guideIdx=i; renderGuide(); };
+    dots.appendChild(d);
+  });
+  const prev = document.getElementById('guide-prev');
+  prev.style.visibility = guideIdx===0 ? 'hidden' : 'visible';
+  document.getElementById('guide-next').textContent = last ? (guideFirstRun ? 'Kom igång' : 'Klar') : 'Nästa';
+  document.getElementById('guide-skip').textContent = guideFirstRun ? 'Hoppa över' : 'Stäng';
+  document.getElementById('guide-sheet').scrollTop = 0;
+}
+
+function guideNext(){
+  if(guideIdx >= GUIDE_STEPS.length-1){ closeGuide(); return; }
+  guideIdx++; renderGuide();
+}
+function guidePrev(){
+  if(guideIdx > 0){ guideIdx--; renderGuide(); }
+}
+function closeGuide(){
+  localStorage.setItem('revolt_guide_seen','1');
+  document.getElementById('guide-overlay').classList.remove('open');
+  const cb = guideOnDone; guideOnDone = null;
+  if(cb) cb();
+}
+
+// Swipe between guide steps + Escape closes overlays
+(function(){
+  const sheet = document.getElementById('guide-sheet');
+  let sx=null, sy=null;
+  sheet.addEventListener('touchstart', e=>{ sx=e.touches[0].clientX; sy=e.touches[0].clientY; }, {passive:true});
+  sheet.addEventListener('touchend', e=>{
+    if(sx===null) return;
+    const dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dx)>50 && Math.abs(dx)>Math.abs(dy)*1.5){ dx<0 ? guideNext() : guidePrev(); }
+    sx=null;
+  });
+  document.addEventListener('keydown', e=>{
+    if(e.key!=='Escape') return;
+    if(document.getElementById('guide-overlay').classList.contains('open')) closeGuide();
+    closeBonusSheet();
+  });
+})();
 
 function renderHistoryList(){
   const list = document.getElementById('appHistory-list');
